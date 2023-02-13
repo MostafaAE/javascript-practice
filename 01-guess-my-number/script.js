@@ -1,14 +1,18 @@
 'use strict';
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+const generateSecretNum = () => Math.trunc(Math.random() * 20) + 1;
+
+let secretNumber = generateSecretNum();
 let score = 20;
 
 const number = document.querySelector('.number');
 const scoreMsg = document.querySelector('.score');
 const message = document.querySelector('.message');
+const guessEl = document.querySelector('.guess');
+const highScoreEl = document.querySelector('.highscore');
 
 const checkValue = function () {
-  const guess = Number(document.querySelector('.guess').value);
+  const guess = Number(guessEl.value);
 
   // no guess
   if (!guess) {
@@ -34,6 +38,18 @@ const checkValue = function () {
     }
   }
 };
-
 const check = document.querySelector('.check');
 check.addEventListener('click', checkValue);
+
+const resetGame = function () {
+  message.textContent = 'Start guessing...';
+  document.body.style.backgroundColor = '#222';
+  number.textContent = '?';
+  number.style.width = '15rem';
+  secretNumber = generateSecretNum();
+  score = 20;
+  scoreMsg.textContent = score;
+  guessEl.value = '';
+};
+const again = document.querySelector('.again');
+again.addEventListener('click', resetGame);
