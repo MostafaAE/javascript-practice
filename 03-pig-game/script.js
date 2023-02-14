@@ -22,6 +22,23 @@ const generateNumber = () => Math.trunc(Math.random() * 6) + 1;
 const setCurrentScore = player =>
   (document.querySelector(`#current--${player}`).textContent = currentScore);
 
+const switchPlayer = function () {
+  // reset current score
+  currentScore = 0;
+  setCurrentScore(currentPlayer);
+
+  document
+    .querySelector(`.player--${currentPlayer}`)
+    .classList.toggle('player--active');
+
+  // change player
+  currentPlayer = Number(!currentPlayer);
+
+  document
+    .querySelector(`.player--${currentPlayer}`)
+    .classList.toggle('player--active');
+};
+
 const rollDice = function () {
   // 1. Generate a random dice roll
   const diceResult = generateNumber();
@@ -37,9 +54,7 @@ const rollDice = function () {
     setCurrentScore(currentPlayer);
   } else {
     // switch to next player
-    currentScore = 0;
-    setCurrentScore(currentPlayer);
-    currentPlayer = Number(!currentPlayer);
+    switchPlayer();
   }
 };
 
