@@ -17,6 +17,7 @@ const btnNew = document.querySelector('.btn--new');
 const btnHold = document.querySelector('.btn--hold');
 
 // STARTING GAME CONDITIONS
+// ############################################################################
 const init = function () {
   currentPlayer = 0;
   currentScore = 0;
@@ -37,6 +38,8 @@ const init = function () {
 };
 init();
 
+// ROLL DICE LOGIC
+// ############################################################################
 // Generate a random number between 1 : 6
 const generateNumber = () => Math.trunc(Math.random() * 6) + 1;
 
@@ -75,6 +78,8 @@ const rollDice = function () {
   }
 };
 
+// HOLD SCORE LOGIC
+// ############################################################################
 const holdScore = function () {
   if (playing) {
     // 1. Add current score to current player score
@@ -83,8 +88,7 @@ const holdScore = function () {
       score[currentPlayer];
 
     // 2. Check if the player's score >= 100
-
-    if (score[currentPlayer] >= 10) {
+    if (score[currentPlayer] >= 100) {
       // Finish the game
       playing = false;
 
