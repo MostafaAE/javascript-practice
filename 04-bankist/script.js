@@ -80,3 +80,26 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
+
+// const user = 'Mostafa Ayman'; // ma
+
+// const username = user
+//   .toLowerCase()
+//   .split(' ')
+//   .map(str => str[0])
+//   .join('');
+// console.log(username);
+
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(str => str[0])
+      .join('');
+  });
+};
+
+createUsernames(accounts);
+
+console.log(accounts);
