@@ -79,46 +79,39 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
 
-  // console.log(balance);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance} €`;
 };
 
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {
+const calcDisplaySummary = function (account) {
+  const movements = account.movements;
   const incomes = movements
     .filter(mov => mov > 0)
     .reduce((acc, cur) => acc + cur);
-  // console.log(incomes);
 
   labelSumIn.textContent = `${incomes}€`;
 
-  const out = movements.filter(mov => mov < 0).reduce((acc, cur) => acc + cur);
-  // console.log(out);
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, cur) => acc + cur, 0);
 
   labelSumOut.textContent = `${Math.abs(out)}€`;
 
   const interest = movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary(account1.movements);
-// const user = 'Mostafa Ayman'; // ma
 
-// const username = user
-//   .toLowerCase()
-//   .split(' ')
-//   .map(str => str[0])
-//   .join('');
-// console.log(username);
+// calcDisplaySummary(account1.movements);
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -132,41 +125,34 @@ const createUsernames = function (accs) {
 
 createUsernames(accounts);
 
-/////////////////////////////////////////////////////////
-// console.log(accounts);
+// Event handler
+let currentAccount;
 
-// const deposits = account1.movements.filter(function (mov) {
-//   return mov > 0;
-// });
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
 
-// const withdrawals = account1.movements.filter(function (mov) {
-//   return mov < 0;
-// });
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
 
-// console.log(deposits);
-// console.log(withdrawals);
-// const balance = account1.movements.reduce(function (acc, cur) {
-//   return acc + cur;
-// });
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    containerApp.style.opacity = 1;
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
 
-// const maxVal = account1.movements.reduce(
-//   (max, cur) => (cur > max ? cur : max),
-//   Number.MIN_VALUE
-// );
+    // Clear input fields
+    inputLoginUsername.value = '';
+    inputLoginPin.value = '';
+    inputLoginUsername.blur();
+    inputLoginPin.blur();
 
-// console.log(maxVal);
-
-// const calcDogHumanAge = function (arr) {
-//   const dogHumanAge = arr.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
-//   console.log(dogHumanAge);
-
-//   const filteredAges = dogHumanAge.filter(age => age >= 18);
-//   console.log(filteredAges);
-
-//   const avg =
-//     filteredAges.reduce((acc, age) => acc + age, 0) / filteredAges.length;
-
-//   return avg;
-// };
-
-// console.log(calcDogHumanAge([5, 2, 4, 1, 15, 8, 3]));
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    calcDisplayBalance(currentAccount.movements);
+    // Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
