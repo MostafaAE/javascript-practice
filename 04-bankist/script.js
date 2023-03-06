@@ -81,6 +81,15 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, cur) => acc + cur, 0);
+
+  console.log(balance);
+  labelBalance.textContent = `${balance}$`;
+};
+
+calcDisplayBalance(account1.movements);
+
 // const user = 'Mostafa Ayman'; // ma
 
 // const username = user
@@ -101,5 +110,3 @@ const createUsernames = function (accs) {
 };
 
 createUsernames(accounts);
-
-console.log(accounts);
