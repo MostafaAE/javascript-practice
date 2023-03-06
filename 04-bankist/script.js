@@ -72,7 +72,7 @@ const displayMovements = function (movements) {
       <div class="movements__type movements__type--${movementType}">${
       index + 1
     } ${movementType}</div>
-      <div class="movements__value">${movement}</div>
+      <div class="movements__value">${movement}€</div>
     </div>
     `;
 
@@ -84,12 +84,33 @@ displayMovements(account1.movements);
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0);
 
-  console.log(balance);
-  labelBalance.textContent = `${balance}$`;
+  // console.log(balance);
+  labelBalance.textContent = `${balance} EUR`;
 };
 
 calcDisplayBalance(account1.movements);
 
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, cur) => acc + cur);
+  // console.log(incomes);
+
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = movements.filter(mov => mov < 0).reduce((acc, cur) => acc + cur);
+  // console.log(out);
+
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
 // const user = 'Mostafa Ayman'; // ma
 
 // const username = user
@@ -110,3 +131,42 @@ const createUsernames = function (accs) {
 };
 
 createUsernames(accounts);
+
+/////////////////////////////////////////////////////////
+// console.log(accounts);
+
+// const deposits = account1.movements.filter(function (mov) {
+//   return mov > 0;
+// });
+
+// const withdrawals = account1.movements.filter(function (mov) {
+//   return mov < 0;
+// });
+
+// console.log(deposits);
+// console.log(withdrawals);
+// const balance = account1.movements.reduce(function (acc, cur) {
+//   return acc + cur;
+// });
+
+// const maxVal = account1.movements.reduce(
+//   (max, cur) => (cur > max ? cur : max),
+//   Number.MIN_VALUE
+// );
+
+// console.log(maxVal);
+
+// const calcDogHumanAge = function (arr) {
+//   const dogHumanAge = arr.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+//   console.log(dogHumanAge);
+
+//   const filteredAges = dogHumanAge.filter(age => age >= 18);
+//   console.log(filteredAges);
+
+//   const avg =
+//     filteredAges.reduce((acc, age) => acc + age, 0) / filteredAges.length;
+
+//   return avg;
+// };
+
+// console.log(calcDogHumanAge([5, 2, 4, 1, 15, 8, 3]));
