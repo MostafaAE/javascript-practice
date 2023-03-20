@@ -6,7 +6,9 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
-
+const tabbedContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
 ///////////////////////////////////////
 // Modal window
 const openModal = function (e) {
@@ -70,4 +72,27 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     const id = target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+///////////////////////////////////////
+// Operations tabbed component
+
+tabbedContainer.addEventListener('click', function (e) {
+  const targetTab = e.target.closest('.operations__tab');
+  if (!targetTab) return;
+
+  // remove active state from all tabs
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+
+  // add active state to the clicked tab
+  targetTab.classList.add('operations__tab--active');
+
+  tabsContent.forEach(contentBox =>
+    contentBox.classList.remove('operations__content--active')
+  );
+
+  const tabNum = targetTab.dataset.tab;
+  document
+    .querySelector(`.operations__content--${tabNum}`)
+    .classList.add('operations__content--active');
 });
