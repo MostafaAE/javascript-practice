@@ -6,6 +6,9 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const section2 = document.querySelector('#section--2');
+const section3 = document.querySelector('#section--3');
+const sectionSignup = document.querySelector('.section--sign-up');
 const tabbedContainer = document.querySelector('.operations__tab-container');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
@@ -142,5 +145,31 @@ const obsOptions = {
   rootMargin: `-${navHeight}px`,
 };
 
-const observer = new IntersectionObserver(stickyNav, obsOptions);
-observer.observe(header);
+const headerObserver = new IntersectionObserver(stickyNav, obsOptions);
+headerObserver.observe(header);
+
+///////////////////////////////////////
+// Reveal elements on scroll animation
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const revealOptions = {
+  root: null,
+  threshold: 0.15,
+};
+
+const allSections = document.querySelectorAll('.section');
+
+const sectionObserver = new IntersectionObserver(revealSection, revealOptions);
+
+allSections.forEach(function (section) {
+  section.classList.add('section--hidden');
+  sectionObserver.observe(section);
+});
