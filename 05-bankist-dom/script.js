@@ -14,6 +14,11 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const header = document.querySelector('.header');
+const sliderBtnLeft = document.querySelector('.slider__btn--left');
+const sliderBtnRight = document.querySelector('.slider__btn--right');
+const dots = document.querySelector('.dots');
+const slides = document.querySelectorAll('.slide');
+
 ///////////////////////////////////////
 // Modal window
 const openModal = function (e) {
@@ -202,4 +207,62 @@ const imgObserver = new IntersectionObserver(loadImage, {
 
 allImgs.forEach(function (img) {
   imgObserver.observe(img);
+});
+
+///////////////////////////////////////
+// Slider
+
+let curSlide = 0;
+
+const activeDot = function (slide) {
+  const dotBtns = document.querySelectorAll('.dots__dot');
+  dotBtns.forEach(function (dot) {
+    dot.classList.remove('dots__dot--active');
+  });
+  dotBtns[slide].classList.add('dots__dot--active');
+};
+
+const goToSlide = function (slide) {
+  slides.forEach(function (s, i) {
+    s.style.transform = `translateX(${(i - slide) * 100}%`;
+  });
+
+  activeDot(slide);
+};
+
+const moveSlides = function (e) {
+  if (e.target === sliderBtnLeft || e.key === 'ArrowLeft') curSlide--;
+  else if (e.target === sliderBtnRight || e.key === 'ArrowRight') curSlide++;
+  const n = slides.length;
+
+  // cycle slides
+  curSlide = ((curSlide % n) + n) % n;
+
+  goToSlide(curSlide);
+};
+
+const createDots = function () {
+  slides.forEach(function (_, i) {
+    const dot = document.createElement('button');
+    dot.classList.add('dots__dot');
+    dot.dataset.slide = i;
+    dots.append(dot);
+    console.log(dot);
+  });
+};
+
+const init = function () {
+  createDots();
+  goToSlide(0);
+};
+init();
+
+sliderBtnLeft.addEventListener('click', moveSlides);
+sliderBtnRight.addEventListener('click', moveSlides);
+document.addEventListener('keydown', moveSlides);
+dots.addEventListener('click', function (e) {
+  if (!e.target.classList.contains('dots__dot')) return;
+
+  curSlide = e.target.dataset.slide;
+  goToSlide(curSlide);
 });
