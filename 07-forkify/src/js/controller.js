@@ -1,5 +1,6 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
+import searchView from './views/searchView.js';
 import 'regenerator-runtime/runtime'; // Polyfilling async/await
 import 'core-js/stable'; // Polyfillnig everything else
 
@@ -27,8 +28,25 @@ const controlRecipes = async function () {
   }
 };
 
-const init = function () {
-  recipeView.addHandlerRender(controlRecipes);
+const controlSearchResults = async function () {
+  try {
+    // Get search query
+    const query = searchView.getQuery();
+
+    if (!query) return;
+
+    // Load search results
+    await model.loadSearchResults(query);
+
+    // Rendering search results
+    console.log(model.state.search.results);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
+};
 init();
