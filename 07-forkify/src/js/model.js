@@ -1,3 +1,4 @@
+import { stat } from 'fs';
 import { API_URL } from './config.js';
 import { getJSON } from './helpers.js';
 
