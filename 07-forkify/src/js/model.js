@@ -20,8 +20,7 @@ export const loadRecipe = async function (recipeId) {
       image: recipe.image_url,
       sourceUrl: recipe.source_url,
     };
-    console.log(state.recipe);
-  } catch (error) {
-    alert(error);
+  } catch (err) {
+    throw err;
   }
 };
