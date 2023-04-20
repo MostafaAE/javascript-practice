@@ -13,9 +13,6 @@ export default class View {
   }
 
   update(data) {
-    if (!data || (Array.isArray(data) && !data.length))
-      return this.renderError();
-
     this._data = data;
     const newMarkup = this._generateMarkup();
 

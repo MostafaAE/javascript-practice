@@ -18,6 +18,8 @@ const controlRecipes = async function () {
     const recipeId = window.location.hash.slice(1);
 
     if (!recipeId) return;
+    // Update results view
+    resultsView.update(model.getSearchResultsPage());
 
     // Render spinner
     recipeView.renderSpinner();
