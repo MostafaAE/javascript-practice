@@ -21,6 +21,12 @@ function newQuote() {
   quoteAuthor.textContent = quote.author ?? 'Unknown';
 }
 
+// Tweet quote
+function tweetQuote() {
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.textContent} - ${quoteAuthor.textContent}`;
+  window.open(twitterUrl, '_blank');
+}
+
 async function getQuotes() {
   try {
     const res = await fetch(API_URL);
@@ -33,5 +39,5 @@ async function getQuotes() {
 getQuotes();
 
 // Event listeners
-
+twitterBtn.addEventListener('click', tweetQuote);
 newQuoteBtn.addEventListener('click', newQuote);
