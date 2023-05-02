@@ -11,19 +11,19 @@ const loader = document.getElementById('loader');
 const API_URL = 'https://jacintodesign.github.io/quotes-api/data/quotes.json';
 let quotesData = [];
 
-// Show loading
-function loading() {
+// Show loading spinner
+function showLoadingSpinner() {
   loader.hidden = false;
   quoteContainer.hidden = true;
 }
 
-function complete() {
+function removeLoadingSpinner() {
   loader.hidden = true;
   quoteContainer.hidden = false;
 }
 
 function newQuote() {
-  loading();
+  showLoadingSpinner();
 
   const rand = Math.trunc(Math.random() * quotesData.length);
   const quote = quotesData[rand];
@@ -33,7 +33,7 @@ function newQuote() {
     ? quoteText.classList.add('long-quote')
     : quoteText.classList.remove('long-quote');
   quoteAuthor.textContent = quote.author ?? 'Unknown';
-  complete();
+  removeLoadingSpinner();
 }
 
 // Tweet quote
@@ -44,11 +44,11 @@ function tweetQuote() {
 
 async function getQuotes() {
   try {
-    loading();
+    showLoadingSpinner();
     const res = await fetch(API_URL);
     quotesData = await res.json();
     newQuote();
-    complete();
+    removeLoadingSpinner();
   } catch (err) {
     console.log(err);
   }
