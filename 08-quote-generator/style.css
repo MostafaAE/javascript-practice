@@ -1,7 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+/* 
+--- TYPOGRAPHY SYSTEM
+
+- Font size system (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Font weights:
+Bold 700
+
+
+Paragraph 
+default 4.4 rem
+Long 3.2 rem
+
+--- BORDER-RADIUS
+Default: 10px
+
+--- 07 WHITESPACES
+- SPACING SYSTEM (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
 html {
   box-sizing: border-box;
+  font-size: 62.5%;
 }
 
 body {
@@ -17,4 +40,43 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.quote-container {
+  max-width: 90rem;
+  padding: 2.4rem 3.2rem;
+  border-radius: 1rem;
+  background-color: rgba(#fff, #fff, #fff, 0.4);
+  box-shadow: 0px 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.quote-text {
+  font-size: 4.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.long-quote {
+  font-size: 3.2rem;
+}
+
+.fa-quote-left {
+  font-size: 8.6rem;
+}
+
+.quote-author {
+  font-size: 3.2rem;
+  font-style: italic;
+  font-weight: 400;
+  margin-bottom: 1.6rem;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 62.5rem) {
+  .quote-container {
+    margin: auto 1.2rem;
+  }
+  .quote-text {
+    font-size: 4rem;
+  }
 }
