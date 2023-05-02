@@ -5,12 +5,26 @@ const quoteText = document.getElementById('quote');
 const quoteAuthor = document.getElementById('author');
 const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
+const loader = document.getElementById('loader');
 
 //Get quotes from API
 const API_URL = 'https://jacintodesign.github.io/quotes-api/data/quotes.json';
 let quotesData = [];
 
+// Show loading
+function loading() {
+  loader.hidden = false;
+  quoteContainer.hidden = true;
+}
+
+function complete() {
+  loader.hidden = true;
+  quoteContainer.hidden = false;
+}
+
 function newQuote() {
+  loading();
+
   const rand = Math.trunc(Math.random() * quotesData.length);
   const quote = quotesData[rand];
 
@@ -19,6 +33,7 @@ function newQuote() {
     ? quoteText.classList.add('long-quote')
     : quoteText.classList.remove('long-quote');
   quoteAuthor.textContent = quote.author ?? 'Unknown';
+  complete();
 }
 
 // Tweet quote
@@ -29,9 +44,11 @@ function tweetQuote() {
 
 async function getQuotes() {
   try {
+    loading();
     const res = await fetch(API_URL);
     quotesData = await res.json();
     newQuote();
+    complete();
   } catch (err) {
     console.log(err);
   }
