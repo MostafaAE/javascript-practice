@@ -55,3 +55,24 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.hidden {
+  visibility: hidden;
+}
+
+/* Image Container */
+.img-container {
+  margin: 1rem 30%;
+}
+
+.img-container img {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 37.5rem) {
+  .img-container {
+    margin: 1rem;
+  }
+}
