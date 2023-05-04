@@ -7,10 +7,10 @@ let ready = false;
 let imgsLoaded = 0;
 let totalImgs = 0;
 // Unsplace API
-const count = 30;
+let loadImgsCount = 5;
 // Normally,  don't store API Keys like this, but an exception made here because it is free, and the data is publicly available!
 const apiKey = 'TLWYYX7_18nvkJ2XHQwgHOglGOOsTouAJnVejyY_L8Q';
-const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&content_filter=high&count=${count}&query=universe`;
+const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&content_filter=high&count=${loadImgsCount}&query=universe`;
 
 function setAttributes(element, attributes) {
   for (const key in attributes) element.setAttribute(key, attributes[key]);
@@ -21,6 +21,8 @@ function imgLoaded() {
 
   if (imgsLoaded === totalImgs) {
     ready = true;
+    loader.hidden = true;
+    loadImgsCount = 30;
   }
 }
 

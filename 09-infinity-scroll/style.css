@@ -56,10 +56,6 @@ h1 {
   transform: translate(-50%, -50%);
 }
 
-.hidden {
-  visibility: hidden;
-}
-
 /* Image Container */
 .img-container {
   margin: 1rem 30%;
