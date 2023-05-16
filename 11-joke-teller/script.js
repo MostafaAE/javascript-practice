@@ -105,6 +105,10 @@ const VoiceRSS = {
   },
 };
 
+function toggleButton() {
+  button.disabled = !button.disabled;
+}
+
 // Passing joke to VoiceRSS API
 function tellMe(joke) {
   VoiceRSS.speech({
@@ -124,6 +128,7 @@ async function getJokes() {
   const apiUrl =
     'https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist,explicit';
   try {
+    toggleButton();
     const res = await fetch(apiUrl);
 
     const data = await res.json();
@@ -135,4 +140,6 @@ async function getJokes() {
   }
 }
 
-getJokes();
+// Event Listeners
+button.addEventListener('click', getJokes);
+audioElement.addEventListener('ended', toggleButton);
