@@ -1,4 +1,4 @@
-# Picture In Picture
+# Joke Teller
 
 This is an app that tells you a random programming joke from JokeAPI via VoiceRSS text-to-speech API.
 
