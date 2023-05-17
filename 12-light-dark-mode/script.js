@@ -11,7 +11,10 @@ const imgPaths = [
   'img/undraw_conceptual_idea_',
 ];
 
+// Toggle Theme Dynamically
 function themeMode(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+
   nav.style.background =
     theme === 'dark' ? 'rgb(0 0 0 / 50%)' : 'rgb(255 255 255 / 50%)';
 
@@ -27,16 +30,7 @@ function themeMode(theme) {
     : toggleIcon.classList.replace('fa-moon', 'fa-sun');
 }
 
-// Toggle Theme Dynamically
-function switchTheme(event) {
-  if (event.target.checked) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    themeMode('dark');
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    themeMode('light');
-  }
-}
-
 // Event Listeners
-toggleSwitch.addEventListener('change', switchTheme);
+toggleSwitch.addEventListener('change', e => {
+  e.target.checked ? themeMode('dark') : themeMode('light');
+});
