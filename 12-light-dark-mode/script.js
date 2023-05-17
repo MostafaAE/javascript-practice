@@ -13,24 +13,36 @@ const imgPaths = [
 
 // Toggle Theme Dynamically
 function themeMode(theme) {
+  const isDark = theme === 'dark';
+
   document.documentElement.setAttribute('data-theme', theme);
 
-  nav.style.background =
-    theme === 'dark' ? 'rgb(0 0 0 / 50%)' : 'rgb(255 255 255 / 50%)';
+  nav.style.background = isDark ? 'rgb(0 0 0 / 50%)' : 'rgb(255 255 255 / 50%)';
 
   imgs.forEach((img, i) => (img.src = `${imgPaths[i]}${theme}.svg`));
 
-  textBox.style.background =
-    theme === 'dark' ? 'rgb(255 255 255 / 50%)' : 'rgb(0 0 0 / 50%)';
+  textBox.style.background = isDark
+    ? 'rgb(255 255 255 / 50%)'
+    : 'rgb(0 0 0 / 50%)';
 
-  toggleText.textContent = theme === 'dark' ? 'Dark Mode' : 'Light Mode';
+  toggleText.textContent = isDark ? 'Dark Mode' : 'Light Mode';
 
-  theme === 'dark'
+  isDark
     ? toggleIcon.classList.replace('fa-sun', 'fa-moon')
     : toggleIcon.classList.replace('fa-moon', 'fa-sun');
+
+  localStorage.setItem('theme', theme);
 }
 
 // Event Listeners
 toggleSwitch.addEventListener('change', e => {
   e.target.checked ? themeMode('dark') : themeMode('light');
 });
+
+function init() {
+  theme = localStorage.getItem('theme');
+  toggleSwitch.checked = theme === 'dark';
+  themeMode(theme);
+}
+
+init();
