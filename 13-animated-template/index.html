@@ -18,6 +18,11 @@
       href="https://cdn.jsdelivr.net/gh/creativetimofficial/tailwind-starter-kit/compiled-tailwind.min.css"
     />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- AOS.js -->
+    <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script defer src="script.js"></script>
+    <!-- Navigation Script -->
+    <script defer src="navbar.js"></script>
   </head>
   <body class="text-gray-800 antialiased">
     <!-- Navigation -->
@@ -48,48 +53,53 @@
             <i class="text-white fas fa-bars"></i>
           </button>
         </div>
-        <!-- Nav Right Side -->
-        <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
-          <!-- Social Media Button -->
-          <li class="flex items-center">
-            <a
-              class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-              href="#"
-            >
-              <!-- Icon -->
-              <i
-                class="lg:text-gray-300 text-gray-500 fab fa-facebook text-lg leading-lg"
-              ></i>
-              <span class="lg:hidden inline-block ml-2">Share</span>
-            </a>
-          </li>
-          <!-- Social Media Button -->
-          <li class="flex items-center">
-            <a
-              class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-              href="#"
-            >
-              <!-- Icon -->
-              <i
-                class="lg:text-gray-300 text-gray-500 fab fa-twitter text-lg leading-lg"
-              ></i>
-              <span class="lg:hidden inline-block ml-2">Tweet</span>
-            </a>
-          </li>
-          <!-- Social Media Button -->
-          <li class="flex items-center">
-            <a
-              class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-              href="#"
-            >
-              <!-- Icon -->
-              <i
-                class="lg:text-gray-300 text-gray-500 fab fa-github text-lg leading-lg"
-              ></i>
-              <span class="lg:hidden inline-block ml-2">Star</span>
-            </a>
-          </li>
-        </ul>
+        <div
+          class="lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none block"
+          id="example-collapse-navbar"
+        >
+          <!-- Nav Right Side -->
+          <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
+            <!-- Social Media Button -->
+            <li class="flex items-center">
+              <a
+                class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                href="#"
+              >
+                <!-- Icon -->
+                <i
+                  class="lg:text-gray-300 text-gray-500 fab fa-facebook text-lg leading-lg"
+                ></i>
+                <span class="lg:hidden inline-block ml-2">Share</span>
+              </a>
+            </li>
+            <!-- Social Media Button -->
+            <li class="flex items-center">
+              <a
+                class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                href="#"
+              >
+                <!-- Icon -->
+                <i
+                  class="lg:text-gray-300 text-gray-500 fab fa-twitter text-lg leading-lg"
+                ></i>
+                <span class="lg:hidden inline-block ml-2">Tweet</span>
+              </a>
+            </li>
+            <!-- Social Media Button -->
+            <li class="flex items-center">
+              <a
+                class="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
+                href="#"
+              >
+                <!-- Icon -->
+                <i
+                  class="lg:text-gray-300 text-gray-500 fab fa-github text-lg leading-lg"
+                ></i>
+                <span class="lg:hidden inline-block ml-2">Star</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
     <!-- End of Navigation -->
@@ -945,21 +955,4 @@
     </footer>
     <!-- End of Footer Section -->
   </body>
-  <!-- AOS.js -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      delay: 200,
-      duration: 1500,
-      once: false,
-      mirror: false,
-    });
-  </script>
-  <!-- Navigation Script -->
-  <script>
-    function toggleNavbar(collapseID) {
-      document.getElementById(collapseID).classList.toggle('hidden');
-      document.getElementById(collapseID).classList.toggle('block');
-    }
-  </script>
 </html>
