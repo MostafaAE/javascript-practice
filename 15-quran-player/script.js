@@ -78,19 +78,17 @@ const prevAudio = function () {
   playAudio();
 };
 
-const updateProgressBar = function (e) {
-  if (audioIsPlaying) {
-    const { currentTime, duration } = e.target;
+const updateProgressBar = function () {
+  const { currentTime, duration } = audioPlayer;
 
-    const progressPercentage = (currentTime / duration) * 100;
-    audioProgress.style.width = `${progressPercentage}%`;
+  const progressPercentage = (currentTime / duration) * 100;
+  audioProgress.style.width = `${progressPercentage}%`;
 
-    const currentMins = Math.floor(currentTime / 60);
-    const currentSecs = Math.floor(currentTime % 60);
-    audioCurTime.textContent = `${currentMins}:${
-      currentSecs < 10 ? 0 : ''
-    }${currentSecs}`;
-  }
+  const currentMins = Math.floor(currentTime / 60);
+  const currentSecs = Math.floor(currentTime % 60);
+  audioCurTime.textContent = `${currentMins}:${
+    currentSecs < 10 ? 0 : ''
+  }${currentSecs}`;
 };
 
 const setProgressBar = function (e) {
@@ -100,6 +98,7 @@ const setProgressBar = function (e) {
   const currentTime = progressPercentage * audioPlayer.duration;
 
   audioPlayer.currentTime = currentTime;
+  updateProgressBar();
 };
 
 // Event Listeners
