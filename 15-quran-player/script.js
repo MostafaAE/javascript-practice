@@ -56,6 +56,14 @@ const loadAudio = function (idx) {
   audioTitle.textContent = audio.displayName;
   audioArtist.textContent = audio.artist;
   audioPlayer.src = `quran/${audio.fileName}.mp3`;
+
+  audioPlayer.addEventListener('loadeddata', e => {
+    const durationMins = Math.floor(e.target.duration / 60);
+    const durationSecs = Math.floor(e.target.duration % 60);
+    audioDuration.textContent = `${durationMins}:${
+      durationSecs < 10 ? 0 : ''
+    }${durationSecs}`;
+  });
 };
 
 const nextAudio = function () {
@@ -76,6 +84,12 @@ const updateProgressBar = function (e) {
 
     const progressPercentage = (currentTime / duration) * 100;
     audioProgress.style.width = `${progressPercentage}%`;
+
+    const currentMins = Math.floor(currentTime / 60);
+    const currentSecs = Math.floor(currentTime % 60);
+    audioCurTime.textContent = `${currentMins}:${
+      currentSecs < 10 ? 0 : ''
+    }${currentSecs}`;
   }
 };
 
