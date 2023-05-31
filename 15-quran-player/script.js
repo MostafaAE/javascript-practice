@@ -63,10 +63,20 @@ const nextAudio = function () {
   loadAudio(curAudioIdx);
   playAudio();
 };
+
 const prevAudio = function () {
   curAudioIdx = (curAudioIdx - 1 + audios.length) % audios.length;
   loadAudio(curAudioIdx);
   playAudio();
+};
+
+const updateProgressBar = function (e) {
+  if (audioIsPlaying) {
+    const { currentTime, duration } = e.target;
+
+    const progressPercentage = (currentTime / duration) * 100;
+    audioProgress.style.width = `${progressPercentage}%`;
+  }
 };
 
 // Event Listeners
@@ -77,5 +87,7 @@ playBtn.addEventListener('click', () => {
 prevBtn.addEventListener('click', prevAudio);
 
 nextBtn.addEventListener('click', nextAudio);
+
+audioPlayer.addEventListener('timeupdate', updateProgressBar);
 
 loadAudio(0);
