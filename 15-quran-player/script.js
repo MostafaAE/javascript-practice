@@ -115,4 +115,6 @@ audioPlayer.addEventListener('timeupdate', updateProgressBar);
 
 audioProgressContainer.addEventListener('click', setProgressBar);
 
+audioPlayer.addEventListener('ended', nextAudio);
+
 loadAudio(0);
