@@ -93,6 +93,15 @@ const updateProgressBar = function (e) {
   }
 };
 
+const setProgressBar = function (e) {
+  const width = this.clientWidth;
+  const { offsetX } = e;
+  const progressPercentage = offsetX / width;
+  const currentTime = progressPercentage * audioPlayer.duration;
+
+  audioPlayer.currentTime = currentTime;
+};
+
 // Event Listeners
 playBtn.addEventListener('click', () => {
   audioIsPlaying ? pauseAudio() : playAudio();
@@ -103,5 +112,7 @@ prevBtn.addEventListener('click', prevAudio);
 nextBtn.addEventListener('click', nextAudio);
 
 audioPlayer.addEventListener('timeupdate', updateProgressBar);
+
+audioProgressContainer.addEventListener('click', setProgressBar);
 
 loadAudio(0);
