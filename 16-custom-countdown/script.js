@@ -15,7 +15,7 @@ const newCountdownBtn = document.querySelector('.new-countdown-btn');
 let title = '';
 let date = '';
 let dateValue = '';
-
+let timer;
 const sec = 1000;
 const min = sec * 60;
 const hour = min * 60;
@@ -27,30 +27,33 @@ const init = function () {
 };
 
 const updateDOM = function () {
-  const now = new Date().getTime();
-  const offset = hour * 3;
-  const distance = dateValue - now - offset;
-  console.log(distance);
+  timer = setInterval(() => {
+    const now = new Date().getTime();
+    const offset = hour * 3;
+    const distance = dateValue - now - offset;
+    console.log(distance);
 
-  const days = Math.floor(distance / day);
-  const hours = Math.floor((distance % day) / hour);
-  const minutes = Math.floor((distance % hour) / min);
-  const seconds = Math.floor((distance % minutes) / sec);
+    const days = Math.floor(distance / day);
+    const hours = Math.floor((distance % day) / hour);
+    const minutes = Math.floor((distance % hour) / min);
+    const seconds = Math.floor((distance % min) / sec);
 
-  // console.log(days, hours, minutes, seconds);
+    console.log(days, hours, minutes, seconds);
 
-  // Populate the data
-  countdownData[0].textContent = days;
-  countdownData[1].textContent = hours;
-  countdownData[2].textContent = minutes;
-  countdownData[3].textContent = seconds;
-  countdownTitle.textContent = title;
+    // Populate the data
+    countdownData[0].textContent = days;
+    countdownData[1].textContent = hours;
+    countdownData[2].textContent = minutes;
+    countdownData[3].textContent = seconds;
 
-  // Hide input
-  inputContainer.hidden = true;
+    countdownTitle.textContent = title;
 
-  // Show countdown
-  countdownContainer.hidden = false;
+    // Hide input
+    inputContainer.hidden = true;
+
+    // Show countdown
+    countdownContainer.hidden = false;
+  }, 1000);
 };
 
 const updateCountdown = function (e) {
@@ -58,7 +61,6 @@ const updateCountdown = function (e) {
   title = inputTitle.value;
   date = inputDate.value;
   dateValue = new Date(date).getTime();
-  console.log(title, date, dateValue);
   updateDOM();
 };
 
