@@ -29,8 +29,8 @@ const init = function () {
 const updateDOM = function () {
   timer = setInterval(() => {
     const now = new Date().getTime();
-    const offset = hour * 3;
-    const distance = dateValue - now - offset;
+    const offset = (new Date().getTimezoneOffset() / 60) * hour;
+    const distance = dateValue - now + offset;
     console.log(distance);
 
     const days = Math.floor(distance / day);
@@ -60,11 +60,34 @@ const updateCountdown = function (e) {
   e.preventDefault();
   title = inputTitle.value;
   date = inputDate.value;
-  dateValue = new Date(date).getTime();
-  updateDOM();
+  if (!date) {
+    alert('Please select a date for the coundown!');
+  } else {
+    dateValue = new Date(date).getTime();
+    updateDOM();
+  }
+};
+
+const reset = function (e) {
+  e.preventDefault();
+  // Hide countdown
+  countdownContainer.hidden = true;
+
+  // Show input
+  inputContainer.hidden = false;
+
+  // Clear the timer
+  clearInterval(timer);
+
+  // Reset the values
+  title = '';
+  date = '';
+  dateValue = '';
 };
 
 // Event Listeners
 submitBtn.addEventListener('click', updateCountdown);
+resetBtn.addEventListener('click', reset);
+
 // Initialization
 init();
