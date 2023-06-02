@@ -131,6 +131,7 @@ li span {
 .complete-title {
   animation: complete 4s infinite;
 }
+
 @keyframes complete {
   0% {
     color: rgb(212, 206, 38);
