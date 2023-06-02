@@ -1,7 +1,7 @@
 const inputContainer = document.querySelector('.input-container');
 const inputTitle = document.querySelector('#title');
 const inputDate = document.querySelector('#date-picker');
-const submitBtn = document.querySelector('.submit-btn');
+const form = document.querySelector('.form');
 
 const countdownContainer = document.querySelector('.countdown');
 const countdownTitle = document.querySelector('.countdown-title');
@@ -12,9 +12,9 @@ const completeContainer = document.querySelector('.complete');
 const completeData = document.querySelector('.complete-info');
 const newCountdownBtn = document.querySelector('.new-countdown-btn');
 
-let title = '';
-let date = '';
-let dateValue = '';
+let title;
+let date;
+let dateValue;
 let timer;
 const sec = 1000;
 const min = sec * 60;
@@ -111,7 +111,7 @@ const reset = function (e) {
 };
 
 // Event Listeners
-submitBtn.addEventListener('click', updateCountdown);
+form.addEventListener('submit', updateCountdown);
 resetBtn.addEventListener('click', reset);
 newCountdownBtn.addEventListener('click', reset);
 // Initialization
