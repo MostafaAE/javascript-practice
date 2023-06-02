@@ -16,7 +16,8 @@
 
     <!-- Container -->
     <div class="container">
-      <div class="input-container">
+      <!-- Input -->
+      <div class="input-container" hidden>
         <h1>Create a Custom Countdown!</h1>
         <form class="form">
           <label for="title">Title</label>
@@ -31,6 +32,18 @@
 
           <button type="submit">Submit</button>
         </form>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown" hidden>
+        <h1 class="countdown-title">Countdown Title here</h1>
+        <ul>
+          <li><span>6</span>Days</li>
+          <li><span>9</span>Hours</li>
+          <li><span>6</span>Minutes</li>
+          <li><span>9</span>Seconds</li>
+        </ul>
+        <button class="countdown-btn">Reset</button>
       </div>
     </div>
   </body>
