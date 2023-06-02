@@ -38,22 +38,30 @@ const updateDOM = function () {
     const minutes = Math.floor((distance % hour) / min);
     const seconds = Math.floor((distance % min) / sec);
 
-    console.log(days, hours, minutes, seconds);
-
-    // Populate the data
-    countdownData[0].textContent = days;
-    countdownData[1].textContent = hours;
-    countdownData[2].textContent = minutes;
-    countdownData[3].textContent = seconds;
-
-    countdownTitle.textContent = title;
-
     // Hide input
     inputContainer.hidden = true;
+    console.log(days, hours, minutes, seconds);
 
-    // Show countdown
-    countdownContainer.hidden = false;
-  }, 1000);
+    if (distance < 0) {
+      countdownContainer.hidden = true;
+      clearInterval(timer);
+      completeData.textContent = `${title} finished on ${date}`;
+      completeContainer.hidden = false;
+    } else {
+      // Populate the data
+      countdownData[0].textContent = days;
+      countdownData[1].textContent = hours;
+      countdownData[2].textContent = minutes;
+      countdownData[3].textContent = seconds;
+
+      countdownTitle.textContent = title;
+
+      completeContainer.hidden = true;
+
+      // Show countdown
+      countdownContainer.hidden = false;
+    }
+  }, sec);
 };
 
 const updateCountdown = function (e) {
@@ -72,7 +80,8 @@ const reset = function (e) {
   e.preventDefault();
   // Hide countdown
   countdownContainer.hidden = true;
-
+  // Hide complete
+  completeContainer.hidden = true;
   // Show input
   inputContainer.hidden = false;
 
@@ -88,6 +97,6 @@ const reset = function (e) {
 // Event Listeners
 submitBtn.addEventListener('click', updateCountdown);
 resetBtn.addEventListener('click', reset);
-
+newCountdownBtn.addEventListener('click', reset);
 // Initialization
 init();
