@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quran Player</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="player-container">
+      <!-- Audio -->
+      <div class="img-container">
+        <img src="img/quran.png" alt="Quran and a Flower on black background" />
+      </div>
+      <h2 class="title">ما تيسر من سورة البقرة</h2>
+      <h3 class="artist">عبد الرحمن مسعد</h3>
+      <audio src="quran/001.mp3" class="audio"></audio>
+
+      <!-- Progress -->
+      <div class="progress-container">
+        <div class="progress"></div>
+        <div class="duration-wrapper">
+          <span class="current-time">0:00</span>
+          <span class="duration">2:06</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="player-controls">
+        <i class="fas fa-backward prev" title="Previous"></i>
+        <i class="fas fa-play main-button" title="Play"></i>
+        <i class="fas fa-forward next" title="Next"></i>
+      </div>
+    </div>
+  </body>
+</html>
