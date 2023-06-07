@@ -41,7 +41,7 @@ body {
 
 /* Bookmarks */
 
-.container {
+.bookmarks-container {
   display: flex;
   flex-wrap: wrap;
 }
@@ -190,7 +190,7 @@ h3 {
 
 /* Media Query: Large Smartphone (Vertical) */
 @media screen and (max-width: 600px) {
-  .container {
+  .bookmarks-container {
     flex-direction: column;
   }
 }
