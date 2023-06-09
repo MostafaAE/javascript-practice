@@ -36,6 +36,21 @@ function validate(nameValue, urlValue) {
   return true;
 }
 
+// Fetch bookmarks
+function fetchBookmarks() {
+  // Get bookmarks from localStorage if available
+  if (localStorage.getItem("bookmarks"))
+    bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+  else {
+    bookmarks = [
+      { name: "Mostafa Ayman", url: "https://www.mostafaayman.com" },
+    ];
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }
+
+  console.log(bookmarks);
+}
+
 // Handle Data from Form
 function storeBookmark(e) {
   e.preventDefault();
@@ -55,8 +70,8 @@ function storeBookmark(e) {
 
   bookmarks.push(bookmark);
 
-  console.log(bookmarks);
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  fetchBookmarks();
   bookmarkForm.reset();
   websiteNameEl.focus();
 }
@@ -71,3 +86,6 @@ window.addEventListener("click", (e) => {
 });
 
 bookmarkForm.addEventListener("submit", storeBookmark);
+
+// On load, fetch bookmarks
+fetchBookmarks();
