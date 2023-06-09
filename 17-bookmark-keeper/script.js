@@ -4,7 +4,7 @@ const modalCloseBtn = document.querySelector(".close-icon");
 const bookmarkForm = document.querySelector(".bookmark-form");
 const websiteNameEl = document.querySelector("#website-name");
 const websiteURLEl = document.querySelector("#website-url");
-const bookmarksContainer = document.querySelector(".container");
+const bookmarksContainer = document.querySelector(".bookmarks-container");
 
 let bookmarks = [];
 
@@ -36,6 +36,62 @@ function validate(nameValue, urlValue) {
   return true;
 }
 
+// function buildBookmarks() {
+//   bookmarks.forEach((bookmark) => {
+//     const html = `
+//     <div class="item">
+//         <i class="fas fa-times delete-bookmark" title="Delete Bookmark"></i>
+//         <div class="name">
+//           <img
+//             src="https://s2.googleusercontent.com/s2/favicons?domain=${bookmark.url}"
+//             alt="favicon"
+//           />
+//           <a href="${bookmark.url}" target="_blank">${bookmark.name}</a>
+//         </div>
+//       </div>
+//       `;
+
+//     bookmarksContainer.insertAdjacentHTML("beforeend", html);
+//   });
+// }
+
+// Build Bookmarks
+function buildBookmarks() {
+  // Remove all bookmark elements
+  bookmarksContainer.textContent = "";
+  // Build items
+  bookmarks.forEach((bookmark) => {
+    const { name, url } = bookmark;
+    // Item
+    const item = document.createElement("div");
+    item.classList.add("item");
+    // Close Icon
+    const closeIcon = document.createElement("i");
+    closeIcon.classList.add("fas", "fa-times");
+    closeIcon.setAttribute("title", "Delete Bookmark");
+    closeIcon.setAttribute("onclick", `deleteBookmark('${url}')`);
+    // Favicon / Link Container
+    const linkInfo = document.createElement("div");
+    linkInfo.classList.add("name");
+    // Favicon
+    const favicon = document.createElement("img");
+    favicon.setAttribute(
+      "src",
+      `https://s2.googleusercontent.com/s2/favicons?domain=${url}`
+    );
+    favicon.setAttribute("alt", "Favicon");
+    // Link
+    const link = document.createElement("a");
+    link.setAttribute("href", `${url}`);
+    link.setAttribute("target", "_blank");
+    link.textContent = name;
+    // Append to bookmarks container
+    linkInfo.append(favicon, link);
+    item.append(closeIcon, linkInfo);
+    bookmarksContainer.appendChild(item);
+  });
+}
+
 // Fetch bookmarks
 function fetchBookmarks() {
   // Get bookmarks from localStorage if available
@@ -48,7 +104,7 @@ function fetchBookmarks() {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }
 
-  console.log(bookmarks);
+  buildBookmarks();
 }
 
 // Handle Data from Form
