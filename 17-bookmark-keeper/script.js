@@ -92,6 +92,16 @@ function buildBookmarks() {
   });
 }
 
+function deleteBookmark(url) {
+  bookmarks.forEach((bookmark, i) => {
+    if (bookmark.url === url) {
+      bookmarks.splice(i, 1);
+    }
+  });
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  fetchBookmarks();
+}
+
 // Fetch bookmarks
 function fetchBookmarks() {
   // Get bookmarks from localStorage if available
