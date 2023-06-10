@@ -1,22 +1,22 @@
-const modalContainer = document.querySelector(".modal-container");
-const modalShowBtn = document.querySelector(".add-bookmark-btn");
-const modalCloseBtn = document.querySelector(".close-icon");
-const bookmarkForm = document.querySelector(".bookmark-form");
-const websiteNameEl = document.querySelector("#website-name");
-const websiteURLEl = document.querySelector("#website-url");
-const bookmarksContainer = document.querySelector(".bookmarks-container");
+const modalContainer = document.querySelector('.modal-container');
+const modalShowBtn = document.querySelector('.add-bookmark-btn');
+const modalCloseBtn = document.querySelector('.close-icon');
+const bookmarkForm = document.querySelector('.bookmark-form');
+const websiteNameEl = document.querySelector('#website-name');
+const websiteURLEl = document.querySelector('#website-url');
+const bookmarksContainer = document.querySelector('.bookmarks-container');
 
-let bookmarks = [];
+let bookmarks = {};
 
 // Show modal
 function showModal() {
-  modalContainer.classList.add("show-modal");
+  modalContainer.classList.add('show-modal');
   websiteNameEl.focus();
 }
 
 // Close modal
 function closeModal() {
-  modalContainer.classList.remove("show-modal");
+  modalContainer.classList.remove('show-modal');
 }
 
 // Validate Form
@@ -25,11 +25,11 @@ function validate(nameValue, urlValue) {
     /(https)?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
   const regex = new RegExp(expression);
   if (!nameValue || !urlValue) {
-    alert("Please submit values for both fields.");
+    alert('Please submit values for both fields.');
     return false;
   }
   if (!urlValue.match(regex)) {
-    alert("Please provide a valid web address.");
+    alert('Please provide a valid web address.');
     return false;
   }
   // Valid
@@ -58,32 +58,35 @@ function validate(nameValue, urlValue) {
 // Build Bookmarks
 function buildBookmarks() {
   // Remove all bookmark elements
-  bookmarksContainer.textContent = "";
+  bookmarksContainer.textContent = '';
   // Build items
-  bookmarks.forEach((bookmark) => {
-    const { name, url } = bookmark;
+  Object.entries(bookmarks).forEach(entry => {
+    const id = entry[0];
+    const { name, url } = entry[1];
+    console.log(id, name, url);
+
     // Item
-    const item = document.createElement("div");
-    item.classList.add("item");
+    const item = document.createElement('div');
+    item.classList.add('item');
     // Close Icon
-    const closeIcon = document.createElement("i");
-    closeIcon.classList.add("fas", "fa-times");
-    closeIcon.setAttribute("title", "Delete Bookmark");
-    closeIcon.setAttribute("onclick", `deleteBookmark('${url}')`);
+    const closeIcon = document.createElement('i');
+    closeIcon.classList.add('fas', 'fa-times');
+    closeIcon.setAttribute('title', 'Delete Bookmark');
+    closeIcon.setAttribute('onclick', `deleteBookmark('${id}')`);
     // Favicon / Link Container
-    const linkInfo = document.createElement("div");
-    linkInfo.classList.add("name");
+    const linkInfo = document.createElement('div');
+    linkInfo.classList.add('name');
     // Favicon
-    const favicon = document.createElement("img");
+    const favicon = document.createElement('img');
     favicon.setAttribute(
-      "src",
+      'src',
       `https://s2.googleusercontent.com/s2/favicons?domain=${url}`
     );
-    favicon.setAttribute("alt", "Favicon");
+    favicon.setAttribute('alt', 'Favicon');
     // Link
-    const link = document.createElement("a");
-    link.setAttribute("href", `${url}`);
-    link.setAttribute("target", "_blank");
+    const link = document.createElement('a');
+    link.setAttribute('href', `${url}`);
+    link.setAttribute('target', '_blank');
     link.textContent = name;
     // Append to bookmarks container
     linkInfo.append(favicon, link);
@@ -92,31 +95,32 @@ function buildBookmarks() {
   });
 }
 
-function deleteBookmark(url) {
-  bookmarks.forEach((bookmark, i) => {
-    if (bookmark.url === url) {
-      bookmarks.splice(i, 1);
-    }
-  });
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+function deleteBookmark(id) {
+  delete bookmarks[id];
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
   fetchBookmarks();
 }
 
 // Fetch bookmarks
 function fetchBookmarks() {
   // Get bookmarks from localStorage if available
-  if (localStorage.getItem("bookmarks"))
-    bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+  if (localStorage.getItem('bookmarks'))
+    bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
   else {
-    bookmarks = [
-      { name: "Mostafa Ayman", url: "https://www.mostafaayman.com" },
-    ];
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    bookmarks[1] = {
+      name: 'Mostafa Ayman',
+      url: 'https://www.mostafaayman.com',
+    };
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
   }
 
   buildBookmarks();
 }
 
+// Generate unique id
+function uniqueID() {
+  return Math.floor(Math.random() * Date.now()).toString(16);
+}
 // Handle Data from Form
 function storeBookmark(e) {
   e.preventDefault();
@@ -124,7 +128,7 @@ function storeBookmark(e) {
   const nameValue = websiteNameEl.value;
   let urlValue = websiteURLEl.value;
 
-  if (!urlValue.includes("https://") && !urlValue.includes("http://")) {
+  if (!urlValue.includes('https://') && !urlValue.includes('http://')) {
     urlValue = `https://${urlValue}`;
   }
   if (!validate(nameValue, urlValue)) return false;
@@ -133,25 +137,27 @@ function storeBookmark(e) {
     name: nameValue,
     url: urlValue,
   };
+  const bookmarkId = uniqueID();
+  console.log(bookmarkId);
 
-  bookmarks.push(bookmark);
+  bookmarks[bookmarkId] = bookmark;
 
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
   fetchBookmarks();
   bookmarkForm.reset();
   websiteNameEl.focus();
 }
 
 // Event Listeners
-modalShowBtn.addEventListener("click", showModal);
+modalShowBtn.addEventListener('click', showModal);
 
-modalCloseBtn.addEventListener("click", closeModal);
+modalCloseBtn.addEventListener('click', closeModal);
 
-window.addEventListener("click", (e) => {
-  if (e.target.classList.contains("modal-container")) closeModal();
+window.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-container')) closeModal();
 });
 
-bookmarkForm.addEventListener("submit", storeBookmark);
+bookmarkForm.addEventListener('submit', storeBookmark);
 
 // On load, fetch bookmarks
 fetchBookmarks();
