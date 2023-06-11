@@ -107,17 +107,17 @@ function createCanvas() {
 // }
 
 // // Store Drawn Lines in DrawnArray
-// function storeDrawn(x, y, size, color, erase) {
-//   const line = {
-//     x,
-//     y,
-//     size,
-//     color,
-//     erase,
-//   };
-//   console.log(line);
-//   drawnArray.push(line);
-// }
+function storeDrawn(x, y, size, color, erase) {
+  const line = {
+    x,
+    y,
+    size,
+    color,
+    erase,
+  };
+  console.log(line);
+  drawnArray.push(line);
+}
 
 // Get Mouse Position
 function getMousePosition(event) {
