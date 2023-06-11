@@ -82,13 +82,13 @@ function createCanvas() {
 }
 
 // // Clear Canvas
-// clearCanvasBtn.addEventListener('click', () => {
-//   createCanvas();
-//   drawnArray = [];
-//   // Active Tool
-//   activeToolEl.textContent = 'Canvas Cleared';
-//   setTimeout(switchToBrush, 1500);
-// });
+clearCanvasBtn.addEventListener('click', () => {
+  createCanvas();
+  drawnArray = [];
+  // Active Tool
+  activeToolEl.textContent = 'Canvas Cleared';
+  setTimeout(switchToBrush, 1500);
+});
 
 // // Draw what is stored in DrawnArray
 function restoreCanvas() {
