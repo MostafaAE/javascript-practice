@@ -25,7 +25,7 @@ const ballRadius = 5;
 let speedY;
 let speedX;
 let trajectoryX;
-let computerSpeed;
+let computerSpeed = 3;
 
 // Score
 let playerScore = 0;
@@ -161,6 +161,7 @@ function animate() {
   ballMove();
   ballBoundaries();
   computerAI();
+  window.requestAnimationFrame(animate);
 }
 
 // Start Game, Reset Everything
@@ -169,9 +170,8 @@ function startGame() {
   computerScore = 0;
   ballReset();
   createCanvas();
+  animate();
   canvas.addEventListener('mousemove', e => {
-    console.log(e);
-    console.log(e.clientX);
     playerMoved = true;
     // Compensate for canvas being centered
     paddleBottomX = e.clientX - canvasPosition - paddleDiff;
