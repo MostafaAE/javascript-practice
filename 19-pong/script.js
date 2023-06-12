@@ -21,6 +21,12 @@ let ballX = 250;
 let ballY = 350;
 const ballRadius = 5;
 
+// Speed
+let speedY;
+let speedX;
+let trajectoryX;
+let computerSpeed;
+
 // Score
 let playerScore = 0;
 let computerScore = 0;
@@ -138,12 +144,46 @@ function ballBoundaries() {
   }
 }
 
+// Computer Movement
+function computerAI() {
+  if (playerMoved) {
+    if (paddleTopX + paddleDiff < ballX) {
+      paddleTopX += computerSpeed;
+    } else {
+      paddleTopX -= computerSpeed;
+    }
+  }
+}
+
+// Called Every Frame
+function animate() {
+  renderCanvas();
+  ballMove();
+  ballBoundaries();
+  computerAI();
+}
+
 // Start Game, Reset Everything
 function startGame() {
   playerScore = 0;
   computerScore = 0;
   ballReset();
   createCanvas();
+  canvas.addEventListener('mousemove', e => {
+    console.log(e);
+    console.log(e.clientX);
+    playerMoved = true;
+    // Compensate for canvas being centered
+    paddleBottomX = e.clientX - canvasPosition - paddleDiff;
+    if (paddleBottomX < paddleDiff) {
+      paddleBottomX = 0;
+    }
+    if (paddleBottomX > width - paddleWidth) {
+      paddleBottomX = width - paddleWidth;
+    }
+    // Hide Cursor
+    canvas.style.cursor = 'none';
+  });
 }
 
 startGame();
