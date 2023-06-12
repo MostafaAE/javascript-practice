@@ -6,6 +6,7 @@ const width = 500;
 const height = 700;
 const screenWidth = window.screen.width;
 const canvasPosition = screenWidth / 2 - width / 2;
+const gameOverEl = document.createElement('div');
 
 // Paddle
 const paddleHeight = 10;
@@ -30,7 +31,9 @@ let computerSpeed = 3;
 // Score
 let playerScore = 0;
 let computerScore = 0;
-const winningScore = 7;
+const winningScore = 5;
+let isGameOver = false;
+let isNewGame = true;
 
 function renderCanvas() {
   // Canvas background
@@ -155,17 +158,53 @@ function computerAI() {
   }
 }
 
+function showGameOverEl(winner) {
+  // Hide Canvas
+  canvas.hidden = true;
+  // Container
+  gameOverEl.textContent = '';
+  gameOverEl.classList.add('game-over-container');
+  // Title
+  const title = document.createElement('h1');
+  title.textContent = `${winner} Wins!`;
+  // Button
+  const playAgainBtn = document.createElement('button');
+  playAgainBtn.setAttribute('onclick', 'startGame()');
+  playAgainBtn.textContent = 'Play Again';
+  // Append
+  gameOverEl.append(title, playAgainBtn);
+
+  body.appendChild(gameOverEl);
+}
+
+// Check If One Player Has Winning Score, If They Do, End Game
+function gameOver() {
+  if (playerScore === winningScore || computerScore === winningScore) {
+    isGameOver = true;
+    // Set Winner
+    let winner = playerScore === winningScore ? 'Player' : 'Computer';
+    showGameOverEl(winner);
+  }
+}
+
 // Called Every Frame
 function animate() {
   renderCanvas();
   ballMove();
   ballBoundaries();
   computerAI();
-  window.requestAnimationFrame(animate);
+  gameOver();
+  if (!isGameOver) window.requestAnimationFrame(animate);
 }
 
 // Start Game, Reset Everything
 function startGame() {
+  if (isGameOver && !isNewGame) {
+    body.removeChild(gameOverEl);
+    canvas.hidden = false;
+  }
+  isGameOver = false;
+  isNewGame = false;
   playerScore = 0;
   computerScore = 0;
   ballReset();
