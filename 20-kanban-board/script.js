@@ -76,6 +76,7 @@ function updateDOM() {
   // Check localStorage once
   if (!updatedOnLoad) {
     getSavedColumns();
+    updatedOnLoad = true;
   }
   // Backlog Column
   backlogList.textContent = '';
@@ -97,7 +98,28 @@ function updateDOM() {
   onHoldListArray.forEach((onHoldItem, i) => {
     createItemEl(onHoldList, 0, onHoldItem, i);
   });
-  // Run getSavedColumns only once, Update Local Storage
+  // Update Local Storage
+  updateSavedColumns();
+}
+
+function rebuildArrayFromDOM(column) {
+  let array = [];
+  for (const child of column.children) array.push(child.textContent);
+
+  return array;
+}
+
+function rebuildArrays() {
+  backlogListArray = rebuildArrayFromDOM(backlogList);
+  progressListArray = rebuildArrayFromDOM(progressList);
+  completeListArray = rebuildArrayFromDOM(completeList);
+  onHoldListArray = rebuildArrayFromDOM(onHoldList);
+  updateDOM();
+
+  console.log(backlogListArray);
+  console.log(progressListArray);
+  console.log(completeListArray);
+  console.log(onHoldListArray);
 }
 
 // Drag Functionality
@@ -109,14 +131,14 @@ function drag(e) {
 }
 // When the item enters a column
 function dragEnter(e, column) {
-  console.log(e);
-  console.log(column);
+  // console.log(e);
+  // console.log(column);
 
   listColumns.forEach(col => col.classList.remove('over'));
   listColumns[column].classList.add('over');
 }
 
-function dragEnd(e) {
+function dragEnd() {
   listColumns.forEach(col => col.classList.remove('over'));
 }
 
@@ -134,6 +156,8 @@ function drop(e) {
   // console.log(col);
   if (col) {
     col.appendChild(draggedItem);
+    dragEnd();
+    rebuildArrays();
   }
 }
 
