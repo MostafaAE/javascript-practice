@@ -139,6 +139,8 @@ ul {
   line-height: 1.5rem;
   letter-spacing: 1px;
   cursor: pointer;
+  overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 .drag-item:focus {
@@ -210,6 +212,8 @@ ul {
   resize: none;
   color: black;
   padding: 10px;
+  overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 .add-item:focus {

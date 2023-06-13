@@ -129,43 +129,35 @@ function updateItem(e, index, column) {
     } else {
       selectedArray[index] = selectedColumnEl[index].textContent;
     }
-    updateDOM();
+    rebuildArrays();
   }
 }
 
-function rebuildArrayFromDOM(column) {
-  let array = [];
-  for (const child of column.children) array.push(child.textContent);
-
-  return array;
-}
-
 function rebuildArrays() {
-  backlogListArray = rebuildArrayFromDOM(backlogList);
-  progressListArray = rebuildArrayFromDOM(progressList);
-  completeListArray = rebuildArrayFromDOM(completeList);
-  onHoldListArray = rebuildArrayFromDOM(onHoldList);
-  updateDOM();
+  backlogListArray = Array.from(backlogList.children).map(
+    child => child.textContent
+  );
+  progressListArray = Array.from(progressList.children).map(
+    child => child.textContent
+  );
+  completeListArray = Array.from(completeList.children).map(
+    child => child.textContent
+  );
+  onHoldListArray = Array.from(onHoldList.children).map(
+    child => child.textContent
+  );
 
-  console.log(backlogListArray);
-  console.log(progressListArray);
-  console.log(completeListArray);
-  console.log(onHoldListArray);
+  updateDOM();
 }
 
 // Drag Functionality
 // When item start dragging
 function drag(e) {
-  // console.log(e);
   draggedItem = e.target;
   dragging = true;
-  // console.log(draggedItem);
 }
 // When the item enters a column
 function dragEnter(e, column) {
-  // console.log(e);
-  // console.log(column);
-
   listColumns.forEach(col => col.classList.remove('over'));
   listColumns[column].classList.add('over');
 }
@@ -183,10 +175,8 @@ function allowDrop(e) {
 // Dropping item in column
 function drop(e) {
   e.preventDefault();
-  // console.log(e.target);
 
   const col = e.target.closest('.drag-item-list');
-  // console.log(col);
   if (col) {
     col.appendChild(draggedItem);
     dragEnd();
@@ -197,7 +187,6 @@ function drop(e) {
 
 // Show add item input box
 function showInputBox(column) {
-  console.log(column);
   addBtns[column].style.visibility = 'hidden';
   saveItemBtns[column].style.display = 'flex';
   addItemContainers[column].style.display = 'flex';
@@ -205,7 +194,6 @@ function showInputBox(column) {
 
 // Hide item input box
 function hideInputBox(column) {
-  console.log(column);
   addBtns[column].style.visibility = 'visible';
   saveItemBtns[column].style.display = 'none';
   addItemContainers[column].style.display = 'none';
