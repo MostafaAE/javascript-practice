@@ -86,17 +86,17 @@ function updateDOM() {
   // Progress Column
   progressList.textContent = '';
   progressListArray.forEach((progressItem, i) => {
-    createItemEl(progressList, 0, progressItem, i);
+    createItemEl(progressList, 1, progressItem, i);
   });
   // Complete Column
   completeList.textContent = '';
   completeListArray.forEach((completeItem, i) => {
-    createItemEl(completeList, 0, completeItem, i);
+    createItemEl(completeList, 2, completeItem, i);
   });
   // On Hold Column
   onHoldList.textContent = '';
   onHoldListArray.forEach((onHoldItem, i) => {
-    createItemEl(onHoldList, 0, onHoldItem, i);
+    createItemEl(onHoldList, 3, onHoldItem, i);
   });
   // Update Local Storage
   updateSavedColumns();
@@ -161,6 +161,31 @@ function drop(e) {
   }
 }
 
+// Show add item input box
+function showInputBox(column) {
+  console.log(column);
+  addBtns[column].style.visibility = 'hidden';
+  saveItemBtns[column].style.display = 'flex';
+  addItemContainers[column].style.display = 'flex';
+}
+
+// Hide item input box
+function hideInputBox(column) {
+  console.log(column);
+  addBtns[column].style.visibility = 'visible';
+  saveItemBtns[column].style.display = 'none';
+  addItemContainers[column].style.display = 'none';
+}
+
+function addToColumn(column) {
+  const text = addItems[column].textContent;
+  if (!text) return;
+  addItems[column].textContent = '';
+  createItemEl(listColumns[column], column, text, 0);
+  listArray[column].push(text);
+  updateDOM();
+}
+
 function init() {
   listColumns.forEach((column, i) => {
     column.setAttribute('ondragover', 'allowDrop(event)');
@@ -170,6 +195,19 @@ function init() {
   });
   updateDOM();
 }
+
+// Event Listeners
+addBtns.forEach((btn, i) =>
+  btn.addEventListener('click', () => {
+    showInputBox(i);
+  })
+);
+saveItemBtns.forEach((btn, i) =>
+  btn.addEventListener('click', () => {
+    addToColumn(i);
+    hideInputBox(i);
+  })
+);
 
 // Onload
 init();
