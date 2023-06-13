@@ -56,18 +56,24 @@ function updateSavedColumns() {
   );
 }
 
+// Filter arrays to remove empty items
+function filterArray(array) {
+  return array.filter(el => el !== null);
+}
+
 // Create DOM Elements for each list item
 function createItemEl(columnEl, column, item, index) {
-  // console.log('columnEl:', columnEl);
-  // console.log('column:', column);
-  // console.log('item:', item);
-  // console.log('index:', index);
   // List Item
   const listEl = document.createElement('li');
   listEl.textContent = item;
   listEl.classList.add('drag-item');
   listEl.draggable = true;
   listEl.setAttribute('ondragstart', 'drag(event)');
+  listEl.id = index;
+  listEl.setAttribute('onfocusout', `updateItem(event, ${index}, ${column})`);
+  listEl.addEventListener('click', e => {
+    e.target.contentEditable = true;
+  });
   columnEl.appendChild(listEl);
 }
 
@@ -83,23 +89,44 @@ function updateDOM() {
   backlogListArray.forEach((backlogItem, i) => {
     createItemEl(backlogList, 0, backlogItem, i);
   });
+  backlogListArray = filterArray(backlogListArray);
+
   // Progress Column
   progressList.textContent = '';
   progressListArray.forEach((progressItem, i) => {
     createItemEl(progressList, 1, progressItem, i);
   });
+  progressListArray = filterArray(progressListArray);
+
   // Complete Column
   completeList.textContent = '';
   completeListArray.forEach((completeItem, i) => {
     createItemEl(completeList, 2, completeItem, i);
   });
+  completeListArray = filterArray(completeListArray);
+
   // On Hold Column
   onHoldList.textContent = '';
   onHoldListArray.forEach((onHoldItem, i) => {
     createItemEl(onHoldList, 3, onHoldItem, i);
   });
+  onHoldListArray = filterArray(onHoldListArray);
+
   // Update Local Storage
   updateSavedColumns();
+}
+
+// Update Item
+function updateItem(e, index, column) {
+  e.target.contentEditable = false;
+  const selectedArray = listArray[column];
+  const selectedColumnEl = listColumns[column].children;
+  if (!selectedColumnEl[index].textContent) {
+    listColumns[column].removeChild(selectedColumnEl[index]);
+    delete selectedArray[index];
+    console.log(selectedArray);
+    updateDOM();
+  }
 }
 
 function rebuildArrayFromDOM(column) {
