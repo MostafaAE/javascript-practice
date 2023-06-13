@@ -14,6 +14,7 @@ let updatedOnLoad = false;
 
 // Drag Functionality
 let draggedItem;
+let dragging = false;
 
 // Initialize Arrays
 let backlogListArray = [];
@@ -121,10 +122,13 @@ function updateItem(e, index, column) {
   e.target.contentEditable = false;
   const selectedArray = listArray[column];
   const selectedColumnEl = listColumns[column].children;
-  if (!selectedColumnEl[index].textContent) {
-    listColumns[column].removeChild(selectedColumnEl[index]);
-    delete selectedArray[index];
-    console.log(selectedArray);
+  if (!dragging) {
+    if (!selectedColumnEl[index].textContent) {
+      listColumns[column].removeChild(selectedColumnEl[index]);
+      delete selectedArray[index];
+    } else {
+      selectedArray[index] = selectedColumnEl[index].textContent;
+    }
     updateDOM();
   }
 }
@@ -154,6 +158,7 @@ function rebuildArrays() {
 function drag(e) {
   // console.log(e);
   draggedItem = e.target;
+  dragging = true;
   // console.log(draggedItem);
 }
 // When the item enters a column
@@ -167,6 +172,7 @@ function dragEnter(e, column) {
 
 function dragEnd() {
   listColumns.forEach(col => col.classList.remove('over'));
+  dragging = false;
 }
 
 // Column allows item to drop
@@ -186,6 +192,7 @@ function drop(e) {
     dragEnd();
     rebuildArrays();
   }
+  dragging = false;
 }
 
 // Show add item input box
