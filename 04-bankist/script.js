@@ -6,7 +6,7 @@
 
 // Data
 const account1 = {
-  owner: 'Jonas Schmedtmann',
+  owner: 'Mostafa Ayman',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
   interestRate: 1.2, // %
   pin: 1111,
@@ -206,7 +206,7 @@ const updateUI = function (currentAccount) {
 
 const startLogoutTime = function () {
   // Set the time to 5 mins
-  let time = 10 * 60;
+  let time = 5 * 60;
   const tick = function () {
     const mins = `${Math.trunc(time / 60)}`.padStart(2, 0);
     const sec = `${time % 60}`.padStart(2, 0);
@@ -402,3 +402,6 @@ btnSort.addEventListener('click', function (e) {
   isSorted = !isSorted;
   displayMovements(currentAccount, isSorted);
 });
+
+inputLoginUsername.value = 'ma';
+inputLoginPin.value = '1111';
